@@ -1,50 +1,77 @@
-import 'dart.io';
-class calculator{
-  int? num1,num2;
-  int addition(this.num1,this.num2){
-    return(num1 + num2);
-  }
-  int subtraction(this.num1,this.num2){
-    return(num1 - num2);
-  }
-  int multplication(this.num1,this.num2){
-    return(num1 * num2);
-  }
-  int division(this.num1,this.num2){
-    return(num1 / num2);
-  }
-  int reminder(this.num1,this.num2){
-    return(num1 % num2);
-  }
+import 'dart:io';
+import 'dart:async';
+Future<void> printWithDelay(String message) async {
+  await Future.delayed(const Duration(seconds: 5));
+  print(message);
 }
-void main(){
-  print('enter the first number: ');
-  int? num1 = int.parse(stdin.readLineSync(!));
-  print('enter the operator: ');
-  Char? operator = stdin.readLineSync(!);
-  print('enter the second number: ');
-  int? num2 = int.parse(stdin.readLineSync(!));
-  int? solution = new calculator;
-  try{
-    if(operator == '+'){
-      print(solution.addition(num1,num2));
+void main() async {
+  var firstNumber, secondNumber;
+  String operation;
+  while (true) {
+    try {
+      print("enter the first number: ");
+      firstNumber = double.parse(stdin.readLineSync()!);
+      break;
+    } on FormatException {
+      print("enter a valid number again");
     }
-    else if(operator == '-'){
-      print(solution.subtraction(num1,num2));
+  }
+  while (true) {
+    try {
+      print("enter the second number: ");
+      secondNumber = double.parse(stdin.readLineSync()!);
+      break;
+    } on FormatException {
+      print("enter a valid number again");
     }
-    else if(operator == '*'){
-      print(solution.multiplication(num1,num2));
+  }
+  while (true) {
+    print("valid operations: + - * / : ");
+    operation = stdin.readLineSync()!;
+    if (operation == "+" ||
+        operation == "-" ||
+        operation == "*" ||
+        operation == "/") {
+      break;
+    } else {
+      print("wrong operation inserted");
     }
-    else if(operator == '/'){
-      print(solution.division(num1,num2));
-    }
-    else if(operator == '%'){
-      print(solution.reminder(num1,num2));
-    }
-    else{
-      print('invalid operator');
-    }
-    }catch(e){
-      print('$e is invalid input');
+  }
+  switch (operation) {
+    case "+":
+      {
+        var sum = firstNumber + secondNumber;
+        print("starting...");
+        await printWithDelay("$firstNumber + $secondNumber = $sum");
+      }
+      break;
+    case "-":
+      {
+        var subtraction = firstNumber - secondNumber;
+        print("starting...");
+        await printWithDelay("$firstNumber - $secondNumber = $subtraction");
+        break;
+      }
+    case "*":
+      {
+        var product = firstNumber * secondNumber;
+        print("starting...");
+        await printWithDelay("$firstNumber * $secondNumber = $product");
+        break;
+      }
+    case "/":
+      {
+        if (secondNumber != 0) {
+          var division = firstNumber / secondNumber;
+          print("starting...");
+          await printWithDelay("$firstNumber / $secondNumber =  $division");
+        } else {
+          print("cant divide, second number is zero");
+        }
+        break;
+      }
+    default:
+      print("Error");
+      return;
   }
 }
